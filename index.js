@@ -1,6 +1,6 @@
 import express from "express";
 import { Account, User } from "./models.js";
-import { seedPlatformAccounts } from "./seed.js";
+import { runSeedTasks } from "./seed.js";
 import { DailyWinningsLimitError, WinningsInterface } from "./winnings.js";
 
 const app = express();
@@ -50,8 +50,9 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 					message: 'User has reached winnings limit of 5 tokens per day'
 				}
 			});
+		} else {
+			next(error);
 		}
-		next(error);
 	}
 });
 
@@ -67,7 +68,7 @@ app.get('/users/:userId/winnings/daily', async (req, res) => {
 	})
 });
 
-app.post('/admin/seed', async (req, res) => {
+app.post('/admin/seed', async (_req, res) => {
 	await seedPlatformAccounts();
 	const platformAccounts = await Account.findAll();
 	console.log("All platformAccounts:", JSON.stringify(platformAccounts, null, 2));
@@ -75,6 +76,7 @@ app.post('/admin/seed', async (req, res) => {
 	res.sendStatus(200);
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Server listening on port ${port}`);
+	await runSeedTasks();
 });

@@ -3,7 +3,8 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "sequelize": "^6.17.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "toad-scheduler": "^1.6.0"
   },
   "name": "arda",
   "version": "1.0.0",

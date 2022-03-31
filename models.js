@@ -15,7 +15,7 @@ User.init({
 });
 
 User.afterCreate(async (user, options) => {
-	const userWinningsAccount = await Account.create({
+	await Account.create({
 		name: accounts.UserWinningsAccount,
 		currency: 'DREAM',
 		UserId: user.id,
@@ -102,6 +102,7 @@ export const accounts = {
 	PlatformUSDCashAccount: 'Platform USD Cash',
 	PlatformDreamAccount: 'Platform Dream tokens',
 	PlatformFeesAccount: 'Platform Fees',
+	PlatformDreamToUSDAccount: 'Platform Dream To USD',
 	UserWinningsAccount: 'User Winnings',
 	UserUSDAccount: 'User USD',
 	UserDreamAccount: 'User Dream tokens',

@@ -27,11 +27,6 @@ export class WinningsInterface {
 				}
 			});
 			
-			const transaction = await Transaction.create({
-				description: `Adding ${winningsAmount} tokens to user 
-				account ${platformDreamAccount.id} as winnings`,
-			});
-			
 			const userWinningsAccount = await Account.findOne({
 				where: {
 					UserId: userId,
@@ -44,6 +39,11 @@ export class WinningsInterface {
 					UserId: userId,
 					name: accounts.UserDreamAccount,
 				}
+			});
+
+			const transaction = await Transaction.create({
+				description: `Adding ${winningsAmount} tokens to user 
+				account ${userDreamAccount.id} as winnings`,
 			});
 
 			await TransactionLedgerEntry.create({
@@ -121,7 +121,7 @@ export class WinningsInterface {
 		
 		return await TransactionLedgerEntry.sum('amount', {
 			where: {
-				'$account.name$': accounts.UserDreamAccount,
+				'$account.name$': accounts.UserWinningsAccount,
 				'$account.UserId$': userId,
 				'$account.currency$': 'DREAM',
 				createdAt: {

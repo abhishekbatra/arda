@@ -45,7 +45,7 @@ async function setupPeriodicConversionTask() {
 			console.error(error);
 		}
 	);
-	const job = new SimpleIntervalJob({ seconds: 15}, task);
+	const job = new SimpleIntervalJob({ seconds: 30}, task);
 	scheduler.addSimpleIntervalJob(job);
 }
 

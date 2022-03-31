@@ -34,7 +34,7 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 	const winningsInterface = new WinningsInterface();
 
 	try {
-		const transaction = await winningsInterface.addWinnings(userId, winnings);
+		const transaction = await winningsInterface.addWinnings(userId, parseInt(winnings));
 		
 		res.send({
 			result: {
@@ -59,7 +59,7 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 app.get('/users/:userId/winnings/daily', async (req, res) => {
 	const userId = req.params.userId;
 	const winningsInterface = new WinningsInterface();
-	const dailyWinnings = await winningsInterface.getDailyWinnings(userId);
+	const dailyWinnings = (await winningsInterface.getDailyWinnings(userId)) || 0;
 
 	res.send({
 		result: {

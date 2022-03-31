@@ -15,12 +15,8 @@ export class WinningsInterface {
 	 * @returns Winnings `Transaction` instance.
 	 */
 	async addWinnings(userId, winningsAmount) {
-		const winningsToday = await this.getDailyWinnings(userId);
-		console.log(`winnings today = ${winningsToday}`);
-		if (winningsToday < 5) {
-			// TODO: what if this transaction causes the winnings to 
-			// cross 5
-			
+		const winningsToday = (await this.getDailyWinnings(userId)) || 0;
+		if (winningsToday + winningsAmount < 5) {
 			const platformDreamAccount = await Account.findOne({
 				where: {
 					name: accounts.PlatformDreamAccount,

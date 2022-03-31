@@ -90,7 +90,7 @@
 					"urlencoded": [
 						{
 							"key": "winnings",
-							"value": "0.0001",
+							"value": "2",
 							"type": "default"
 						}
 					]
@@ -111,6 +111,40 @@
 						{
 							"key": "userId",
 							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users/winnings/daily",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:{{Server port}}/users/:userId/winnings/daily",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Server port}}",
+					"path": [
+						"users",
+						":userId",
+						"winnings",
+						"daily"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "3"
 						}
 					]
 				}

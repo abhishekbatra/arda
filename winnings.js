@@ -82,7 +82,6 @@ export class WinningsInterface {
 	 * value for the day
 	 */
 	async getHourlyWinnings(userId) {
-		const now = new Date();
 		const before = new Date();
 		before.setHours(before.getHours() - 1);
 		
@@ -96,7 +95,6 @@ export class WinningsInterface {
 	 * value for the day
 	 */
 	 async getDailyWinnings(userId) {
-		const now = new Date();
 		const before = new Date();
 		before.setHours(0);
 		

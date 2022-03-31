@@ -34,7 +34,7 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 	const winningsInterface = new WinningsInterface();
 
 	try {
-		const transaction = await winningsInterface.addWinnings(userId, parseInt(winnings));
+		const transaction = await winningsInterface.addWinnings(userId, parseFloat(winnings));
 		
 		res.send({
 			result: {

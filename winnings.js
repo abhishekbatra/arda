@@ -15,7 +15,7 @@ export class WinningsInterface {
 	 * @returns Winnings `Transaction` instance.
 	 */
 	async addWinnings(userId, winningsAmount) {
-		const winningsToday = await this.getWinningsForCurrentDay(userId);
+		const winningsToday = await this.getDailyWinnings(userId);
 		console.log(`winnings today = ${winningsToday}`);
 		if (winningsToday < 5) {
 			// TODO: what if this transaction causes the winnings to 
@@ -80,17 +80,44 @@ export class WinningsInterface {
 	}
 
 	/**
-	 * Get the winnings accumulated by the user today. Currently 
-	 * ignores user timezone and relies universally on server
-	 * timezone.
+	 * Get the winnings accumulated by the user in the last hour.
 	 * @param {string} userId id of a `User` instance
 	 * @returns `Promise<number>` promise that resolves to winnings
 	 * value for the day
 	 */
-	async getWinningsForCurrentDay(userId) {
+	async getHourlyWinnings(userId) {
 		const now = new Date();
 		const before = new Date();
 		before.setHours(before.getHours() - 1);
+		
+		return await this.getWinningsSince(userId, before);
+	}
+
+	/**
+	 * Get the winnings accumulated by the user today.
+	 * @param {string} userId id of a `User` instance
+	 * @returns `Promise<number>` promise that resolves to winnings
+	 * value for the day
+	 */
+	 async getDailyWinnings(userId) {
+		const now = new Date();
+		const before = new Date();
+		before.setHours(0);
+		
+		return await this.getWinningsSince(userId, before);
+	}
+
+	/**
+	 * Get the winnings accumulated by the user since given time. Currently 
+	 * ignores user timezone and relies universally on server
+	 * timezone.
+	 * @param {string} userId id of a `User` instance
+	 * @param {Date}	since time since winnings to be calculated
+	 * @returns `Promise<number>` promise that resolves to winnings
+	 * value for the day
+	 */
+	async getWinningsSince(userId, since) {
+		const now = new Date();
 		
 		return await TransactionLedgerEntry.sum('amount', {
 			where: {
@@ -98,7 +125,7 @@ export class WinningsInterface {
 				'$account.UserId$': userId,
 				'$account.currency$': 'DREAM',
 				createdAt: {
-					[Op.between]: [before, now],
+					[Op.between]: [since, now],
 				},
 				entryType: 'd',
 			},

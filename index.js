@@ -11,7 +11,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/users/get', async (req, res) => {
 	const users = await User.findAll();
-	res.send(users);
+	res.send({
+		result: { users },
+	});
 });
 
 app.post('/users/create', async (req, res) => {
@@ -21,7 +23,9 @@ app.post('/users/create', async (req, res) => {
 		lastName,
 	});
 
-	res.send(user);
+	res.send({
+		result: { user },
+	});
 });
 
 app.post('/users/:userId/winnings/add', async (req, res, next) => {
@@ -33,7 +37,9 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 		const transaction = await winningsInterface.addWinnings(userId, winnings);
 		
 		res.send({
-			transaction
+			result: {
+				transaction,
+			}
 		});
 	} catch(error) {
 		console.error(error);
@@ -47,6 +53,18 @@ app.post('/users/:userId/winnings/add', async (req, res, next) => {
 		}
 		next(error);
 	}
+});
+
+app.get('/users/:userId/winnings/daily', async (req, res) => {
+	const userId = req.params.userId;
+	const winningsInterface = new WinningsInterface();
+	const dailyWinnings = await winningsInterface.getDailyWinnings(userId);
+
+	res.send({
+		result: {
+			dailyWinnings,
+		}
+	})
 });
 
 app.post('/admin/seed', async (req, res) => {

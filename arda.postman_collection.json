@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "e082622b-5336-47db-ac51-31b61333417b",
+		"name": "arda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Seed",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{Server port}}/admin/seed",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Server port}}",
+					"path": [
+						"admin",
+						"seed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users/create",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "A",
+							"type": "default"
+						},
+						{
+							"key": "lastName",
+							"value": "B",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:{{Server port}}/users/create",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Server port}}",
+					"path": [
+						"users",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users/get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:{{Server port}}/users/get",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Server port}}",
+					"path": [
+						"users",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users/winnings/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "winnings",
+							"value": "0.0001",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:{{Server port}}/users/:userId/winnings/add",
+					"host": [
+						"localhost"
+					],
+					"port": "{{Server port}}",
+					"path": [
+						"users",
+						":userId",
+						"winnings",
+						"add"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Server port",
+			"value": "8080"
+		}
+	]
+}
